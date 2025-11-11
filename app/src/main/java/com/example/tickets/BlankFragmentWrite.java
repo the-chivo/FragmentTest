@@ -9,8 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-
-public class BlankFragment extends Fragment {
+public class BlankFragmentWrite extends Fragment {
 
 
 
@@ -18,10 +17,9 @@ public class BlankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blank, container, false);
+        return inflater.inflate(R.layout.fragment_blank_write, container, false);
     }
 
-    @Override
     public void onStart() {
         super.onStart();
         if(getActivity() instanceof MainActivity){

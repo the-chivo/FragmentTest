@@ -1,6 +1,7 @@
 package com.example.tickets;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +13,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
 
-    BlankFragment fragmentMain;
-    BlankFragment fragment1;
+    BlankFragmentView fragmentView;
+    BlankFragmentWrite fragmentWrite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +27,41 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        Button fragmentViewBtn = (Button) findViewById(R.id.button);
+        Button fragmentWriteBtn = (Button) findViewById(R.id.button1);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transact = fragmentManager.beginTransaction();
 
-        fragmentMain = new BlankFragment();
-        fragment1 = new BlankFragment();
-        transact.replace(R.id.fragmentContainer, fragmentMain);
+        fragmentView = new BlankFragmentView();
+        fragmentWrite = new BlankFragmentWrite();
+        transact.replace(R.id.fragmentContainer, fragmentView);
         transact.commit();
 
+        fragmentWriteBtn.setOnClickListener(v -> {
+
+            try {
+                FragmentTransaction writeTransact = fragmentManager.beginTransaction();
+                writeTransact.replace(R.id.fragmentContainer, fragmentWrite);
+                writeTransact.commit();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        });
+
+        fragmentViewBtn.setOnClickListener(v -> {
+
+            try {
+                FragmentTransaction viewTransact = fragmentManager.beginTransaction();
+                viewTransact.replace(R.id.fragmentContainer, fragmentView);
+                viewTransact.commit();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        });
     }
+
+
 
     public void test(){
 
