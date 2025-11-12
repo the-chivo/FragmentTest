@@ -2,6 +2,7 @@ package com.example.tickets;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.tickets.Model.Ticket;
+import com.example.tickets.Model.ticketsEstados;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction writeTransact = fragmentManager.beginTransaction();
                 writeTransact.replace(R.id.fragmentContainer, fragmentWrite);
                 writeTransact.commit();
+
             } catch (Exception e) {
                 System.out.println(e);
             }

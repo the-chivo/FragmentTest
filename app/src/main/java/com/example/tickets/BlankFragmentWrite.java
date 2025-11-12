@@ -7,10 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Button;
 
 public class BlankFragmentWrite extends Fragment {
-
 
 
     @Override
@@ -18,13 +17,15 @@ public class BlankFragmentWrite extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_blank_write, container, false);
+
     }
 
     public void onStart() {
         super.onStart();
         if(getActivity() instanceof MainActivity){
 
-            ((MainActivity) getActivity()).test();
+            MainActivity mainActivity = ((MainActivity) getActivity());
+
         }
     }
 }

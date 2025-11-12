@@ -7,11 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 
 public class BlankFragmentView extends Fragment {
 
+    public int a;
 
 
     @Override
@@ -27,7 +30,26 @@ public class BlankFragmentView extends Fragment {
         super.onStart();
         if(getActivity() instanceof MainActivity){
 
-            ((MainActivity) getActivity()).test();   //obtienes acceso a la main activity
+            MainActivity mainActivity = ((MainActivity) getActivity());
+            Button sendBtn = (Button) mainActivity.findViewById(R.id.sendTicketBtn);
+            Spinner spinner = (Spinner) mainActivity.findViewById(R.id.spinner);
+            EditText nameEditText = (EditText) mainActivity.findViewById(R.id.nameEditText);
+            EditText descriptionEditText = (EditText) mainActivity.findViewById(R.id.descriptionEditText);
+            EditText stepsEditText = (EditText) mainActivity.findViewById(R.id.stepsEditText);
+
+            String name = nameEditText.getText().toString();
+            String description = descriptionEditText.getText().toString();
+            String steps = stepsEditText.getText().toString();
+
+            sendBtn.setOnClickListener(v -> {
+                try {
+                    if(name.equals("")|| description.equals("") ){
+
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
     }
 }
