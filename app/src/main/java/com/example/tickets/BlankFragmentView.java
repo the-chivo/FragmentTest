@@ -10,11 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.example.tickets.Model.GestorTickets;
 
 
 public class BlankFragmentView extends Fragment {
-
-    public int a;
 
 
     @Override
@@ -37,14 +38,20 @@ public class BlankFragmentView extends Fragment {
             EditText descriptionEditText = (EditText) mainActivity.findViewById(R.id.descriptionEditText);
             EditText stepsEditText = (EditText) mainActivity.findViewById(R.id.stepsEditText);
 
-            String name = nameEditText.getText().toString();
-            String description = descriptionEditText.getText().toString();
-            String steps = stepsEditText.getText().toString();
 
             sendBtn.setOnClickListener(v -> {
-                try {
-                    if(name.equals("")|| description.equals("") ){
 
+                String name = nameEditText.getText().toString();
+                String description = descriptionEditText.getText().toString();
+                String steps = stepsEditText.getText().toString();
+                spinner.getSelectedItemId();
+
+                try {
+                    if(name.equals("")|| description.equals("") || steps.equals("")){
+                        Toast.makeText(mainActivity, "No puede haber campos vacios", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        GestorTickets.getTicketInfo(name, description, steps);
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -52,4 +59,6 @@ public class BlankFragmentView extends Fragment {
             });
         }
     }
+
+
 }
