@@ -2,23 +2,23 @@ package com.example.tickets.Model;
 
 public class Ticket {
 
-    public Ticket(ticketsEstados estadoTickets, String name, String description, String steps) {
+    public Ticket(String estadoTickets, String name, String description, String steps) {
         this.estadoTickets = estadoTickets;
         this.name = name;
         this.description = description;
         this.steps = steps;
     }
 
-    private ticketsEstados estadoTickets = ticketsEstados.NUEVO;
+    private String estadoTickets;
     private String name;
     private String description;
     private String steps;
 
-    public ticketsEstados getEstadoTickets() {
+    public String getEstadoTickets() {
         return estadoTickets;
     }
 
-    public void setEstadoTickets(ticketsEstados estadoTickets) {
+    public void setEstadoTickets(String estadoTickets) {
         this.estadoTickets = estadoTickets;
     }
 

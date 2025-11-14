@@ -1,6 +1,8 @@
 package com.example.tickets;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -30,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+        startActivity(intent);
+
+
+
 
         Button fragmentViewBtn = (Button) findViewById(R.id.button);
         Button fragmentWriteBtn = (Button) findViewById(R.id.button1);

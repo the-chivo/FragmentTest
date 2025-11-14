@@ -33,7 +33,7 @@ public class BlankFragmentView extends Fragment {
 
             MainActivity mainActivity = ((MainActivity) getActivity());
             Button sendBtn = (Button) mainActivity.findViewById(R.id.sendTicketBtn);
-            Spinner spinner = (Spinner) mainActivity.findViewById(R.id.spinner);
+            Spinner spinner = (Spinner) mainActivity.findViewById(R.id.spinnerView);
             EditText nameEditText = (EditText) mainActivity.findViewById(R.id.nameEditText);
             EditText descriptionEditText = (EditText) mainActivity.findViewById(R.id.descriptionEditText);
             EditText stepsEditText = (EditText) mainActivity.findViewById(R.id.stepsEditText);
@@ -44,20 +44,45 @@ public class BlankFragmentView extends Fragment {
                 String name = nameEditText.getText().toString();
                 String description = descriptionEditText.getText().toString();
                 String steps = stepsEditText.getText().toString();
-                spinner.getSelectedItemId();
+                String spinnerPosition = getSpinnerString(spinner.getSelectedItemPosition());
+                System.out.println(spinnerPosition);
 
                 try {
                     if(name.equals("")|| description.equals("") || steps.equals("")){
                         Toast.makeText(mainActivity, "No puede haber campos vacios", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        GestorTickets.getTicketInfo(name, description, steps);
+                        GestorTickets.getTicketInfo(name, description, steps, spinnerPosition);
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             });
         }
+    }
+
+    private static String getSpinnerString(int itemPosition){
+        String spinerstring = "";
+        switch (itemPosition){
+
+            case 0:
+                spinerstring = "Nuevo";
+                break;
+            case 1:
+                spinerstring = "Abierto";
+                break;
+            case 2:
+                spinerstring = "Pendiente";
+                break;
+            case 3:
+                spinerstring = "Resuelto";
+                break;
+            case 4:
+                spinerstring = "Cerrado";
+                break;
+        }
+
+        return spinerstring;
     }
 
 
