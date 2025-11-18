@@ -56,7 +56,7 @@ public class BlankFragmentView extends Fragment {
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
-                    //hola
+                    //holafdf
                 }
             });
         }
