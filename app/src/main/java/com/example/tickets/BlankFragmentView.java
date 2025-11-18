@@ -56,7 +56,6 @@ public class BlankFragmentView extends Fragment {
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
-                    //holafdf
                 }
             });
         }
@@ -84,6 +83,10 @@ public class BlankFragmentView extends Fragment {
         }
 
         return spinerstring;
+    }
+
+    public static void setTicketView(){
+
     }
 
 
