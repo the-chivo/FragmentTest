@@ -14,8 +14,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.tickets.Model.GestorTickets;
 import com.example.tickets.Model.Ticket;
 import com.example.tickets.Model.ticketsEstados;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
 
 
         Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
@@ -73,9 +79,10 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(e);
             }
         });
+
+
+
     }
-
-
 
     public void test(){
 

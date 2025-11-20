@@ -2,9 +2,11 @@ package com.example.tickets.Model;
 
 import android.widget.Toast;
 
+import com.example.tickets.BlankFragmentWrite;
 import com.example.tickets.MainActivity;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,14 +19,28 @@ public class GestorTickets {
     MainActivity mainActivity;
 
     public static void getTicketInfo(String name, String description, String steps, String ticketStatus) throws IOException {
-        Ticket ticket = new Ticket(ticketStatus,name, description, steps);
-        System.out.println(name + description + ticketStatus + steps);
-        createTicketFile(ticket);
+        File file = createTicketFile();
+        FileReader fr = new FileReader(file);
+
+        if(fr.read() == -1){  //Comprueba si hay texto en el documento y crea el primer ticket
+            Ticket ticket = new Ticket(ticketStatus,name, description, steps, 0);
+            añadirTicketATxt(file, ticket);
+            System.out.println("dxdsd");
+        }
+        else {
+                //Si ya ahi un ticket o mas crea el ticket con id +1 del ultimo ticket de la lista
+            List<Ticket> ticketList = getTicketList(file);
+            int id = getLastId(ticketList);
+            Ticket ticket = new Ticket(ticketStatus, name, description, steps, id);
+            añadirTicketATxt(file, ticket);
+            leerFile();
+        }
+
+
     }
 
 
-    private static void createTicketFile(Ticket ticket) throws IOException {
-
+    private static File createTicketFile() throws IOException {
         File file = new File("/data/user/0/com.example.tickets/files/userList.txt");
         try {
             if (!file.exists()){
@@ -33,22 +49,12 @@ public class GestorTickets {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        FileReader fr = new FileReader(file);
 
-        añadirTicketATxt(file, ticket);
-
-        int i;
-        while ((i = fr.read()) != -1){
-            System.out.println((char) i);
-        }
-
-        getTicketList(file);
-
-
+        return file;
     }
 
 
-    private static void eliminarTexto(File file) throws IOException {
+    public static void eliminarTexto(File file) throws IOException {
         RandomAccessFile raf = new RandomAccessFile(file, "rw");
         raf.setLength(0);
     }
@@ -56,11 +62,11 @@ public class GestorTickets {
 
     private static void añadirTicketATxt(File file, Ticket ticket) throws IOException {
         FileWriter fw = new FileWriter(file ,true);
-        fw.write(ticket.getEstadoTickets() + " " + ticket.getName() + " " + ticket.getDescription() + " " + ticket.getSteps() + "\n");
+        fw.write(ticket.getEstadoTickets() + " " + ticket.getName() + " " + ticket.getDescription() + " " + ticket.getSteps() + " " +  ticket.getId() + "\n");
         fw.close();
     }
 
-    private static List<Ticket> getTicketList(File file){
+    public static List<Ticket> getTicketList(File file){
 
         int espacio = 32; //Representa un espacio de texto en binario
         int linea = 10; // Representa un salto de linea
@@ -76,6 +82,7 @@ public class GestorTickets {
                 String nombreStr = "";
                 String descripcionStr = "";
                 String pasosStr = "";
+                String idStr = "";
                 int b;
 
                 while ((b = raf.read()) != espacio && b != -1) {
@@ -94,11 +101,17 @@ public class GestorTickets {
                     pasosStr += (char) b;
                 }
 
+                while ((b = raf.read()) != linea && b != -1 && b != cr) {
+                    idStr += (char) b;
+                }
+
                 if (b == cr && raf.getFilePointer() < raf.length()) {
                     raf.read();
                 }
 
-                ticketList.add(new Ticket(estadoStr, nombreStr, descripcionStr, pasosStr));
+                int id = Integer.parseInt(idStr.trim()) + 1;
+                System.out.println("El id es " + id);
+                ticketList.add(new Ticket(estadoStr, nombreStr, descripcionStr, pasosStr, id));
 
             }
         } catch (IOException e) {
@@ -106,6 +119,24 @@ public class GestorTickets {
         }
 
         return  ticketList;
+    }
+
+    public static void leerFile() throws IOException {
+
+        File file = new File("/data/user/0/com.example.tickets/files/userList.txt");
+        FileReader fr = new FileReader(file);
+        int i;
+        while ((i = fr.read()) != -1){
+            System.out.println((char) i);
+        }
+    }
+
+    public static int getLastId(List<Ticket> ticketList){
+
+        int id;
+        int index = ticketList.size() -1;
+        id = ticketList.get(index).getId();
+        return id;
     }
 
 

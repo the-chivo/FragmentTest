@@ -1,5 +1,6 @@
 package com.example.tickets;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.tickets.Model.GestorTickets;
 import com.example.tickets.Model.Ticket;
 
+import java.io.File;
 import java.util.List;
 
 public class BlankFragmentWrite extends Fragment {
@@ -31,22 +35,80 @@ public class BlankFragmentWrite extends Fragment {
 
             MainActivity mainActivity = ((MainActivity) getActivity());
             LinearLayout btnLayout = (LinearLayout) mainActivity.findViewById(R.id.linearLayout);
-            createTicketBtn(btnLayout, mainActivity);
-            createTicketBtn(btnLayout, mainActivity);
+            TextView ticketBtn;
+
+            File file = new File("/data/user/0/com.example.tickets/files/userList.txt");
+            List<Ticket> tikectList = GestorTickets.getTicketList(file);
+
+            createTicketBtn(tikectList, mainActivity, btnLayout);
         }
     }
 
-    public static void setTicketList(List<Ticket> listaTickets){
 
-        for (int i = 0; i <= listaTickets.size(); i++){
+    public static void createTicketBtn(List<Ticket> ticketList, MainActivity mainActivity, LinearLayout btnLayout){
 
+        for(int i = 0; i <= ticketList.size() -1; i++){
+
+            Ticket ticket = ticketList.get(i);
+            String btnText = "ID: " + ticket.getId() + "  Nombre: " + ticket.getName();
+
+            TextView ticketBtn = new Button(mainActivity);
+            ticketBtn.setText(btnText);
+            ticketBtn.setOnClickListener(v -> {
+                try{
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            TextView ticketBtnActualizado = btnColorManager(ticket, ticketBtn);
+            btnLayout.addView(ticketBtnActualizado);
         }
+
+
     }
 
-    public static void createTicketBtn( LinearLayout btnLayout, MainActivity mainActivity){
+    private static TextView btnColorManager(Ticket ticket, TextView btn){
 
-        Button boton = new Button(mainActivity);
-        boton.setText("a");
-        btnLayout.addView(boton);
+        String nuevo = "Nuevo";
+        String abierto = "Abierto";
+        String pendiente = "Pendiente";
+        String resuelto = "Resuelto";
+        String cerrado = "Cerrado";
+
+        int azul = Color.parseColor("#66A6E1");
+        int rojo = Color.parseColor("#E0716C");
+        int naranja = Color.parseColor("#E0A349");
+        int amarillo = Color.parseColor("#DEE157");
+        int verde = Color.parseColor("#45E592");
+
+        if(ticket.getEstadoTickets().equals(nuevo)){
+            btn.setBackgroundColor(azul);
+        }
+
+        if(ticket.getEstadoTickets().equals(abierto)){
+            btn.setBackgroundColor(rojo);
+        }
+
+        if(ticket.getEstadoTickets().equals(pendiente)){
+            btn.setBackgroundColor(naranja);
+        }
+
+        if(ticket.getEstadoTickets().equals(resuelto)){
+            btn.setBackgroundColor(amarillo);
+        }
+
+        if(ticket.getEstadoTickets().equals(cerrado)){
+            btn.setBackgroundColor(verde);
+        }
+
+        return btn;
     }
+
+    private static void abrirTicket(){
+
+
+    }
+
 }

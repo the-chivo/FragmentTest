@@ -2,18 +2,19 @@ package com.example.tickets.Model;
 
 public class Ticket {
 
-    public Ticket(String estadoTickets, String name, String description, String steps) {
+    public Ticket(String estadoTickets, String name, String description, String steps, int id) {
         this.estadoTickets = estadoTickets;
         this.name = name;
         this.description = description;
         this.steps = steps;
+        this.id = id;
     }
 
     private String estadoTickets;
     private String name;
     private String description;
     private String steps;
-
+    private int id;
     public String getEstadoTickets() {
         return estadoTickets;
     }
@@ -44,5 +45,13 @@ public class Ticket {
 
     public void setSteps(String steps) {
         this.steps = steps;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
