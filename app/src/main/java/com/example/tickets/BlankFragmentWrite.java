@@ -27,6 +27,7 @@ public class BlankFragmentWrite extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_blank_write, container, false);
 
+
     }
 
     public void onStart() {
@@ -40,22 +41,24 @@ public class BlankFragmentWrite extends Fragment {
             File file = new File("/data/user/0/com.example.tickets/files/userList.txt");
             List<Ticket> tikectList = GestorTickets.getTicketList(file);
 
-            createTicketBtn(tikectList, mainActivity, btnLayout);
+            createTicketBtn(tikectList, btnLayout);
         }
     }
 
 
-    public static void createTicketBtn(List<Ticket> ticketList, MainActivity mainActivity, LinearLayout btnLayout){
+    public void createTicketBtn(List<Ticket> ticketList, LinearLayout btnLayout){
 
         for(int i = 0; i <= ticketList.size() -1; i++){
 
             Ticket ticket = ticketList.get(i);
             String btnText = "ID: " + ticket.getId() + "  Nombre: " + ticket.getName();
 
-            TextView ticketBtn = new Button(mainActivity);
+            TextView ticketBtn = new Button((MainActivity) getActivity());
             ticketBtn.setText(btnText);
             ticketBtn.setOnClickListener(v -> {
                 try{
+                    ((MainActivity) getActivity()).abrirEditarTicket();
+                    ((MainActivity) getActivity()).fragmentView.setTicketView(ticket);
 
                 } catch (Exception e) {
                     throw new RuntimeException(e);

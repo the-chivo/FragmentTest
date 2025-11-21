@@ -13,10 +13,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.tickets.Model.GestorTickets;
+import com.example.tickets.Model.Ticket;
 
 
 public class BlankFragmentView extends Fragment {
 
+    Button sendBtn;
+    Spinner spinner;
+    EditText nameEditText;
+    EditText descriptionEditText;
+    EditText stepsEditText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,12 +37,13 @@ public class BlankFragmentView extends Fragment {
         super.onStart();
         if(getActivity() instanceof MainActivity){
 
+            System.out.println(1);
             MainActivity mainActivity = ((MainActivity) getActivity());
-            Button sendBtn = (Button) mainActivity.findViewById(R.id.sendTicketBtn);
-            Spinner spinner = (Spinner) mainActivity.findViewById(R.id.spinnerView);
-            EditText nameEditText = (EditText) mainActivity.findViewById(R.id.nameEditText);
-            EditText descriptionEditText = (EditText) mainActivity.findViewById(R.id.descriptionEditText);
-            EditText stepsEditText = (EditText) mainActivity.findViewById(R.id.stepsEditText);
+            sendBtn = (Button) mainActivity.findViewById(R.id.sendTicketBtn);
+            spinner = (Spinner) mainActivity.findViewById(R.id.spinnerView);
+            nameEditText = (EditText) mainActivity.findViewById(R.id.nameEditText);
+            descriptionEditText = (EditText) mainActivity.findViewById(R.id.descriptionEditText);
+            stepsEditText = (EditText) mainActivity.findViewById(R.id.stepsEditText);
 
 
             sendBtn.setOnClickListener(v -> {
@@ -61,7 +68,7 @@ public class BlankFragmentView extends Fragment {
         }
     }
 
-    private static String getSpinnerString(int itemPosition){
+    private  String getSpinnerString(int itemPosition){
         String spinerstring = "";
         switch (itemPosition){
 
@@ -85,7 +92,13 @@ public class BlankFragmentView extends Fragment {
         return spinerstring;
     }
 
-    public static void setTicketView(){
+    public void setTicketView(Ticket ticket){
+
+        System.out.println(2);
+        String a = ticket.getName();
+        nameEditText.setText(ticket.getName());
+        System.out.println(nameEditText.getText());
+        descriptionEditText.setText(ticket.getDescription());
 
     }
 

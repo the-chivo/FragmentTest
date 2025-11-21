@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentContainer;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,8 +24,8 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    BlankFragmentView fragmentView;
-    BlankFragmentWrite fragmentWrite;
+    public BlankFragmentView fragmentView;
+    public BlankFragmentWrite fragmentWrite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,25 +60,13 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentWriteBtn.setOnClickListener(v -> {
 
-            try {
-                FragmentTransaction writeTransact = fragmentManager.beginTransaction();
-                writeTransact.replace(R.id.fragmentContainer, fragmentWrite);
-                writeTransact.commit();
+            abrirListaTicket();
 
-            } catch (Exception e) {
-                System.out.println(e);
-            }
         });
 
         fragmentViewBtn.setOnClickListener(v -> {
 
-            try {
-                FragmentTransaction viewTransact = fragmentManager.beginTransaction();
-                viewTransact.replace(R.id.fragmentContainer, fragmentView);
-                viewTransact.commit();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            abrirEditarTicket();
         });
 
 
@@ -88,5 +77,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void abrirListaTicket(){
 
+        try {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction writeTransact = fragmentManager.beginTransaction();
+            writeTransact.replace(R.id.fragmentContainer, fragmentWrite);
+            writeTransact.commit();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public void abrirEditarTicket(){
+
+        try {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction writeTransact = fragmentManager.beginTransaction();
+            writeTransact.replace(R.id.fragmentContainer, fragmentView);
+            writeTransact.commit();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
 }
