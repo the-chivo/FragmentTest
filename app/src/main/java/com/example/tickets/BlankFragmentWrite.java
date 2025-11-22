@@ -23,7 +23,7 @@ import java.util.List;
 public class BlankFragmentWrite extends Fragment {
 
     Spinner spinner;
-
+    LinearLayout btnLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,11 +31,12 @@ public class BlankFragmentWrite extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_blank_write, container, false);
 
         spinner = (Spinner) rootview.findViewById(R.id.spinner);
+        btnLayout = (LinearLayout) rootview.findViewById(R.id.linearLayout);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Cada vez que se selecciona una opción, filtramos los tickets
+                createTicketBtn(btnLayout, position);
 
             }
 
@@ -59,38 +60,77 @@ public class BlankFragmentWrite extends Fragment {
             File file = new File("/data/user/0/com.example.tickets/files/userList.txt");
             List<Ticket> tikectList = GestorTickets.getTicketList(file);
 
-            createTicketBtn(tikectList, btnLayout);
+            createTicketBtn(btnLayout, 0);
         }
     }
 
 
-    public void createTicketBtn(List<Ticket> ticketList, LinearLayout btnLayout){
+    public void createTicketBtn(LinearLayout btnLayout, int position){
 
-        for(int i = 0; i <= ticketList.size() -1; i++){
+        File file = new File("/data/user/0/com.example.tickets/files/userList.txt");
+        List<Ticket> ticketList = GestorTickets.getTicketList(file);
+        btnLayout.removeAllViews();
 
-            Ticket ticket = ticketList.get(i);
-            String btnText = "ID: " + ticket.getId() + "  Nombre: " + ticket.getName();
+        String[] estados = {"Todos", "Nuevo", "Abierto", "Pendiente", "Resuelto", "Cerrado"};
+        String estadoSeleccionado = estados[position];
 
-            TextView ticketBtn = new Button((MainActivity) getActivity());
-            ticketBtn.setText(btnText);
-            ticketBtn.setOnClickListener(v -> {
-                try{
+        if(position == 0){
 
-                    Bundle ticketData = new Bundle();
-                    ticketData.putSerializable("Ticket", ticket);
-                    ((MainActivity) getActivity()).fragmentView.setArguments(ticketData);
-                    setArguments(ticketData);
-                    ((MainActivity) getActivity()).abrirEditarTicket();
+            for(int i = 0; i <= ticketList.size() -1; i++){
 
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            });
+                Ticket ticket = ticketList.get(i);
+                String btnText = "ID: " + ticket.getId() + "  Nombre: " + ticket.getName();
 
-            TextView ticketBtnActualizado = btnColorManager(ticket, ticketBtn);
-            btnLayout.addView(ticketBtnActualizado);
+                TextView ticketBtn = new Button((MainActivity) getActivity());
+                ticketBtn.setText(btnText);
+                ticketBtn.setOnClickListener(v -> {
+                    try{
+
+                        Bundle ticketData = new Bundle();
+                        ticketData.putSerializable("Ticket", ticket);
+                        ((MainActivity) getActivity()).fragmentView.setArguments(ticketData);
+                        setArguments(ticketData);
+                        ((MainActivity) getActivity()).abrirEditarTicket();
+
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                TextView ticketBtnActualizado = btnColorManager(ticket, ticketBtn);
+                btnLayout.addView(ticketBtnActualizado);
+            }
         }
+        else {
+            for(int i = 0; i <= ticketList.size() -1; i++){
 
+                Ticket ticket = ticketList.get(i);
+                if(ticketList.get(i).getEstadoTickets().equals(estadoSeleccionado)){
+
+                    String btnText = "ID: " + ticket.getId() + "  Nombre: " + ticket.getName();
+
+                    TextView ticketBtn = new Button((MainActivity) getActivity());
+                    ticketBtn.setText(btnText);
+                    ticketBtn.setOnClickListener(v -> {
+                        try{
+
+                            Bundle ticketData = new Bundle();
+                            ticketData.putSerializable("Ticket", ticket);
+                            ((MainActivity) getActivity()).fragmentView.setArguments(ticketData);
+                            setArguments(ticketData);
+                            ((MainActivity) getActivity()).abrirEditarTicket();
+
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
+                    TextView ticketBtnActualizado = btnColorManager(ticket, ticketBtn);
+                    btnLayout.addView(ticketBtnActualizado);
+                }
+
+            }
+        }
 
     }
 
