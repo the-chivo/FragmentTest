@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -23,6 +24,7 @@ public class BlankFragmentEdit extends Fragment {
     EditText nameEditText;
     EditText descriptionEditText;
     EditText stepsEditText;
+    public boolean ticketIsNew = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,11 +38,24 @@ public class BlankFragmentEdit extends Fragment {
         descriptionEditText = (EditText) rootView.findViewById(R.id.descriptionEditText);
         stepsEditText = (EditText) rootView.findViewById(R.id.stepsEditText);
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position != 0 && ticketIsNew){
+                    spinner.setSelection(0);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
         return rootView;
+
     }
 
     @Override
     public void onStart() {
+
         super.onStart();
         if(getActivity() instanceof MainActivity){
 
@@ -93,6 +108,7 @@ public class BlankFragmentEdit extends Fragment {
         stepsEditText.setText(ticket.getSteps());
         descriptionEditText.setText(ticket.getDescription());
         spinner.setSelection(getSpinnerInt(ticket.getEstadoTickets()));
+        ticketIsNew = false;
     }
 
     private  int getSpinnerInt(String itemPosition){
@@ -150,5 +166,6 @@ public class BlankFragmentEdit extends Fragment {
         descriptionEditText.setText("");
         stepsEditText.setText("");
     }
+
 
 }

@@ -1,5 +1,7 @@
 package com.example.tickets.Model;
 
+import com.example.tickets.BlankFragmentEdit;
+import com.example.tickets.BlankFragmentWrite;
 import com.example.tickets.MainActivity;
 
 import java.io.File;
@@ -12,14 +14,13 @@ import java.util.List;
 
 public class GestorTickets {
 
-    MainActivity mainActivity;
-
     public static void getTicketInfo(String name, String description, String steps, String ticketStatus) throws IOException {
         File file = createTicketFile();
         FileReader fr = new FileReader(file);
+        boolean ticketIsNew = false;
 
         if(fr.read() == -1){  //Comprueba si hay texto en el documento y crea el primer ticket
-            Ticket ticket = new Ticket(ticketStatus,name, description, steps, 0);
+            Ticket ticket = new Ticket(ticketStatus,name, description, steps, 0, ticketIsNew);
             añadirTicketATxt(file, ticket);
             System.out.println("dxdsd");
         }
@@ -27,7 +28,7 @@ public class GestorTickets {
                 //Si ya ahi un ticket o mas crea el ticket con id +1 del ultimo ticket de la lista
             List<Ticket> ticketList = getTicketList(file);
             int id = getLastId(ticketList);
-            Ticket ticket = new Ticket(ticketStatus, name, description, steps, id);
+            Ticket ticket = new Ticket(ticketStatus, name, description, steps, id, ticketIsNew);
             añadirTicketATxt(file, ticket);
             leerFile();
         }
@@ -79,6 +80,7 @@ public class GestorTickets {
                 String descripcionStr = "";
                 String pasosStr = "";
                 String idStr = "";
+                boolean ticketIsNew = false;
                 int b;
 
                 while ((b = raf.read()) != separador && b != -1) {
@@ -108,7 +110,7 @@ public class GestorTickets {
 
                 int id = Integer.parseInt(idStr.trim()) + 1;
                 System.out.println("El id es " + id);
-                ticketList.add(new Ticket(estadoStr, nombreStr, descripcionStr, pasosStr, id));
+                ticketList.add(new Ticket(estadoStr, nombreStr, descripcionStr, pasosStr, id, ticketIsNew));
 
             }
         } catch (IOException e) {

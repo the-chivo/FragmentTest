@@ -4,12 +4,13 @@ import java.io.Serializable;
 
 public class Ticket implements Serializable {
 
-    public Ticket(String estadoTickets, String name, String description, String steps, int id) {
+    public Ticket(String estadoTickets, String name, String description, String steps, int id, boolean ticketIsnew) {
         this.estadoTickets = estadoTickets;
         this.name = name;
         this.description = description;
         this.steps = steps;
         this.id = id;
+        this.ticketIsnew = ticketIsnew;
     }
 
     private String estadoTickets;
@@ -17,6 +18,7 @@ public class Ticket implements Serializable {
     private String description;
     private String steps;
     private int id;
+    private boolean ticketIsnew = true;
     public String getEstadoTickets() {
         return estadoTickets;
     }

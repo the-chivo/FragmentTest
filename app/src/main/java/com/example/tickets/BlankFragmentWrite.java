@@ -37,13 +37,9 @@ public class BlankFragmentWrite extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 createTicketBtn(btnLayout, position);
-
             }
-
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // No hace nada
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         return rootview;

@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             writeTransact.replace(R.id.fragmentContainer, fragmentView);
             writeTransact.commit();
             fragmentView.clearTicket();
+            fragmentView.ticketIsNew = true;
 
         } catch (Exception e) {
             System.out.println(e);
