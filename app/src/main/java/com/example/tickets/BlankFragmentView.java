@@ -29,6 +29,13 @@ public class BlankFragmentView extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_blank_view, container, false);
+
+        sendBtn = (Button) rootView.findViewById(R.id.sendTicketBtn);
+        spinner = (Spinner) rootView.findViewById(R.id.spinnerView);
+        nameEditText = (EditText) rootView.findViewById(R.id.nameEditText);
+        descriptionEditText = (EditText) rootView.findViewById(R.id.descriptionEditText);
+        stepsEditText = (EditText) rootView.findViewById(R.id.stepsEditText);
+
         return rootView;
     }
 
@@ -37,7 +44,13 @@ public class BlankFragmentView extends Fragment {
         super.onStart();
         if(getActivity() instanceof MainActivity){
 
-            System.out.println(1);
+            if(getArguments() != null){
+                Ticket ticket = (Ticket) getArguments().getSerializable("Ticket");
+                if(ticket != null){
+                    setTicketView(ticket);
+                }
+            }
+
             MainActivity mainActivity = ((MainActivity) getActivity());
             sendBtn = (Button) mainActivity.findViewById(R.id.sendTicketBtn);
             spinner = (Spinner) mainActivity.findViewById(R.id.spinnerView);
@@ -68,6 +81,40 @@ public class BlankFragmentView extends Fragment {
         }
     }
 
+
+    public void setTicketView(Ticket ticket){
+
+        nameEditText.setText(ticket.getName());
+        descriptionEditText.setText(ticket.getDescription());
+        stepsEditText.setText(ticket.getSteps());
+        descriptionEditText.setText(ticket.getDescription());
+        spinner.setSelection(getSpinnerInt(ticket.getEstadoTickets()));
+    }
+
+    private  int getSpinnerInt(String itemPosition){
+        int spinnerInt = 0;
+        switch (itemPosition){
+
+            case "Nuevo":
+                spinnerInt = 0;
+                break;
+            case "Abierto":
+                spinnerInt = 1;
+                break;
+            case "Pendiente":
+                spinnerInt = 2;
+                break;
+            case "Resuelto":
+                spinnerInt = 3;
+                break;
+            case "Cerrado":
+                spinnerInt = 4;
+                break;
+        }
+
+        return spinnerInt;
+    }
+
     private  String getSpinnerString(int itemPosition){
         String spinerstring = "";
         switch (itemPosition){
@@ -92,15 +139,12 @@ public class BlankFragmentView extends Fragment {
         return spinerstring;
     }
 
-    public void setTicketView(Ticket ticket){
+    public void clearTicket(){
 
-        System.out.println(2);
-        String a = ticket.getName();
-        nameEditText.setText(ticket.getName());
-        System.out.println(nameEditText.getText());
-        descriptionEditText.setText(ticket.getDescription());
-
+        spinner.setSelection(0);
+        nameEditText.setText("");
+        descriptionEditText.setText("");
+        stepsEditText.setText("");
     }
-
 
 }

@@ -1,6 +1,8 @@
 package com.example.tickets.Model;
 
-public class Ticket {
+import java.io.Serializable;
+
+public class Ticket implements Serializable {
 
     public Ticket(String estadoTickets, String name, String description, String steps, int id) {
         this.estadoTickets = estadoTickets;

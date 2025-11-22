@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction writeTransact = fragmentManager.beginTransaction();
             writeTransact.replace(R.id.fragmentContainer, fragmentView);
             writeTransact.commit();
+            fragmentView.clearTicket();
 
         } catch (Exception e) {
             System.out.println(e);

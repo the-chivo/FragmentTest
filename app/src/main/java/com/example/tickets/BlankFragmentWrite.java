@@ -57,8 +57,12 @@ public class BlankFragmentWrite extends Fragment {
             ticketBtn.setText(btnText);
             ticketBtn.setOnClickListener(v -> {
                 try{
+
+                    Bundle ticketData = new Bundle();
+                    ticketData.putSerializable("Ticket", ticket);
+                    ((MainActivity) getActivity()).fragmentView.setArguments(ticketData);
+                    setArguments(ticketData);
                     ((MainActivity) getActivity()).abrirEditarTicket();
-                    ((MainActivity) getActivity()).fragmentView.setTicketView(ticket);
 
                 } catch (Exception e) {
                     throw new RuntimeException(e);
