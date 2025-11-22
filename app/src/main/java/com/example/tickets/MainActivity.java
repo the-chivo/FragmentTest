@@ -4,27 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.FragmentContainer;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.tickets.Model.GestorTickets;
-import com.example.tickets.Model.Ticket;
-import com.example.tickets.Model.ticketsEstados;
-
-import java.io.File;
-import java.io.IOException;
-
 public class MainActivity extends AppCompatActivity {
 
-    public BlankFragmentView fragmentView;
+    public BlankFragmentEdit fragmentView;
     public BlankFragmentWrite fragmentWrite;
 
     @Override
@@ -53,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transact = fragmentManager.beginTransaction();
 
-        fragmentView = new BlankFragmentView();
+        fragmentView = new BlankFragmentEdit();
         fragmentWrite = new BlankFragmentWrite();
         transact.replace(R.id.fragmentContainer, fragmentView);
         transact.commit();

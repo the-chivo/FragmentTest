@@ -16,7 +16,7 @@ import com.example.tickets.Model.GestorTickets;
 import com.example.tickets.Model.Ticket;
 
 
-public class BlankFragmentView extends Fragment {
+public class BlankFragmentEdit extends Fragment {
 
     Button sendBtn;
     Spinner spinner;
@@ -68,8 +68,12 @@ public class BlankFragmentView extends Fragment {
                 System.out.println(spinnerPosition);
 
                 try {
+                    String textoBruto = name + description + steps;
                     if(name.equals("")|| description.equals("") || steps.equals("")){
                         Toast.makeText(mainActivity, "No puede haber campos vacios", Toast.LENGTH_SHORT).show();
+                    }
+                    if (textoBruto.contains("~")){
+                        Toast.makeText(mainActivity, "Ningun campo puede contener '~' listo k eres un listo", Toast.LENGTH_SHORT).show();
                     }
                     else{
                         GestorTickets.getTicketInfo(name, description, steps, spinnerPosition);

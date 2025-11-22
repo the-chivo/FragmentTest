@@ -1,12 +1,8 @@
 package com.example.tickets.Model;
 
-import android.widget.Toast;
-
-import com.example.tickets.BlankFragmentWrite;
 import com.example.tickets.MainActivity;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -62,13 +58,13 @@ public class GestorTickets {
 
     private static void añadirTicketATxt(File file, Ticket ticket) throws IOException {
         FileWriter fw = new FileWriter(file ,true);
-        fw.write(ticket.getEstadoTickets() + " " + ticket.getName() + " " + ticket.getDescription() + " " + ticket.getSteps() + " " +  ticket.getId() + "\n");
+        fw.write(ticket.getEstadoTickets() + "~" + ticket.getName() + "~" + ticket.getDescription() + "~" + ticket.getSteps() + "~" +  ticket.getId() + "\n");
         fw.close();
     }
 
     public static List<Ticket> getTicketList(File file){
 
-        int espacio = 32; //Representa un espacio de texto en binario
+        int separador = 126; //Se usa para separar los datos en el txt, es "~" en acsci
         int linea = 10; // Representa un salto de linea
         int cr = 13; // Representa un carriage return
 
@@ -85,19 +81,20 @@ public class GestorTickets {
                 String idStr = "";
                 int b;
 
-                while ((b = raf.read()) != espacio && b != -1) {
+                while ((b = raf.read()) != separador && b != -1) {
                     estadoStr += (char) b;
+                    System.out.println(estadoStr);
                 }
-
-                while ((b = raf.read()) != espacio && b != -1) {
+                System.out.println(estadoStr);
+                while ((b = raf.read()) != separador && b != -1) {
                     nombreStr += (char) b;
                 }
 
-                while ((b = raf.read()) != espacio && b != -1) {
+                while ((b = raf.read()) != separador && b != -1) {
                     descripcionStr += (char) b;
                 }
 
-                while ((b = raf.read()) != espacio && b != -1) {
+                while ((b = raf.read()) != separador && b != -1) {
                     pasosStr += (char) b;
                 }
 
