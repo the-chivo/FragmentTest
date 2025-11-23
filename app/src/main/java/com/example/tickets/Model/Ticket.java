@@ -58,4 +58,12 @@ public class Ticket implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public boolean getNew() {
+        return ticketIsnew;
+    }
+
+    public void setNew(boolean ticketIsnew) {
+        this.ticketIsnew = ticketIsnew;
+    }
 }

@@ -25,6 +25,7 @@ public class BlankFragmentEdit extends Fragment {
     EditText descriptionEditText;
     EditText stepsEditText;
     public boolean ticketIsNew = true;
+    GestorTickets gestorTickets = new GestorTickets();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,7 +92,7 @@ public class BlankFragmentEdit extends Fragment {
                         Toast.makeText(mainActivity, "Ningun campo puede contener '~' listo k eres un listo", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        GestorTickets.getTicketInfo(name, description, steps, spinnerPosition);
+                        gestorTickets.getTicketInfo(name, description, steps, spinnerPosition);
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -109,6 +110,7 @@ public class BlankFragmentEdit extends Fragment {
         descriptionEditText.setText(ticket.getDescription());
         spinner.setSelection(getSpinnerInt(ticket.getEstadoTickets()));
         ticketIsNew = false;
+        ticket.setNew(false);
     }
 
     private  int getSpinnerInt(String itemPosition){

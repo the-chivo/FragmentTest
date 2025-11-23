@@ -14,10 +14,11 @@ import java.util.List;
 
 public class GestorTickets {
 
-    public static void getTicketInfo(String name, String description, String steps, String ticketStatus) throws IOException {
+    public void getTicketInfo(String name, String description, String steps, String ticketStatus) throws IOException {
         File file = createTicketFile();
         FileReader fr = new FileReader(file);
         boolean ticketIsNew = false;
+
 
         if(fr.read() == -1){  //Comprueba si hay texto en el documento y crea el primer ticket
             Ticket ticket = new Ticket(ticketStatus,name, description, steps, 0, ticketIsNew);
@@ -37,7 +38,7 @@ public class GestorTickets {
     }
 
 
-    private static File createTicketFile() throws IOException {
+    private File createTicketFile() throws IOException {
         File file = new File("/data/user/0/com.example.tickets/files/userList.txt");
         try {
             if (!file.exists()){
@@ -51,19 +52,19 @@ public class GestorTickets {
     }
 
 
-    public static void eliminarTexto(File file) throws IOException {
+    public void eliminarTexto(File file) throws IOException {
         RandomAccessFile raf = new RandomAccessFile(file, "rw");
         raf.setLength(0);
     }
 
 
-    private static void añadirTicketATxt(File file, Ticket ticket) throws IOException {
+    private void añadirTicketATxt(File file, Ticket ticket) throws IOException {
         FileWriter fw = new FileWriter(file ,true);
         fw.write(ticket.getEstadoTickets() + "~" + ticket.getName() + "~" + ticket.getDescription() + "~" + ticket.getSteps() + "~" +  ticket.getId() + "\n");
         fw.close();
     }
 
-    public static List<Ticket> getTicketList(File file){
+    public List<Ticket> getTicketList(File file){
 
         int separador = 126; //Se usa para separar los datos en el txt, es "~" en acsci
         int linea = 10; // Representa un salto de linea
@@ -120,7 +121,7 @@ public class GestorTickets {
         return  ticketList;
     }
 
-    public static void leerFile() throws IOException {
+    public void leerFile() throws IOException {
 
         File file = new File("/data/user/0/com.example.tickets/files/userList.txt");
         FileReader fr = new FileReader(file);
@@ -130,7 +131,7 @@ public class GestorTickets {
         }
     }
 
-    public static int getLastId(List<Ticket> ticketList){
+    public int getLastId(List<Ticket> ticketList){
 
         int id;
         int index = ticketList.size() -1;

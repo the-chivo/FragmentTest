@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,16 +31,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
         Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
         startActivity(intent);
 
-
-
-
-        Button fragmentViewBtn = (Button) findViewById(R.id.button);
-        Button fragmentWriteBtn = (Button) findViewById(R.id.button1);
+        ImageButton createTicketBtn = (ImageButton) findViewById(R.id.anadirTicket);
+        ImageButton listTicketBtn = (ImageButton) findViewById(R.id.verTicket);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transact = fragmentManager.beginTransaction();
@@ -49,22 +45,18 @@ public class MainActivity extends AppCompatActivity {
         transact.replace(R.id.fragmentContainer, fragmentView);
         transact.commit();
 
-        fragmentWriteBtn.setOnClickListener(v -> {
 
-            abrirListaTicket();
-
-        });
-
-        fragmentViewBtn.setOnClickListener(v -> {
+        createTicketBtn.setOnClickListener(v -> {
 
             abrirEditarTicket();
         });
 
+        listTicketBtn.setOnClickListener(v -> {
+
+            abrirListaTicket();
+        });
 
 
-    }
-
-    public void test(){
 
     }
 

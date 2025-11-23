@@ -24,6 +24,7 @@ public class BlankFragmentWrite extends Fragment {
 
     Spinner spinner;
     LinearLayout btnLayout;
+    GestorTickets gestorTickets = new GestorTickets();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class BlankFragmentWrite extends Fragment {
             TextView ticketBtn;
 
             File file = new File("/data/user/0/com.example.tickets/files/userList.txt");
-            List<Ticket> tikectList = GestorTickets.getTicketList(file);
+            List<Ticket> tikectList = gestorTickets.getTicketList(file);
 
             createTicketBtn(btnLayout, 0);
         }
@@ -64,7 +65,7 @@ public class BlankFragmentWrite extends Fragment {
     public void createTicketBtn(LinearLayout btnLayout, int position){
 
         File file = new File("/data/user/0/com.example.tickets/files/userList.txt");
-        List<Ticket> ticketList = GestorTickets.getTicketList(file);
+        List<Ticket> ticketList = gestorTickets.getTicketList(file);
         btnLayout.removeAllViews();
 
         String[] estados = {"Todos", "Nuevo", "Abierto", "Pendiente", "Resuelto", "Cerrado"};
@@ -130,7 +131,7 @@ public class BlankFragmentWrite extends Fragment {
 
     }
 
-    private static TextView btnColorManager(Ticket ticket, TextView btn){
+    private TextView btnColorManager(Ticket ticket, TextView btn){
 
         String nuevo = "Nuevo";
         String abierto = "Abierto";
@@ -165,11 +166,6 @@ public class BlankFragmentWrite extends Fragment {
         }
 
         return btn;
-    }
-
-    private static void abrirTicket(){
-
-
     }
 
 }
